@@ -1,38 +1,35 @@
-import css from './ContactList.module.css';
-
-import Contact from '../Contact/Contact';
-import Message from '../Message/Message';
-
 import { useSelector } from 'react-redux';
 import {
   selectContacts,
   selectFilteredContacts,
-} from '../../redux/selectors.js';
+} from '../../redux/contacts/selectors.js';
 
-const ContactList = () => {
+import Contact from '../Contact/Contact.jsx';
+import Notification from '../Notification/Notification.jsx';
+import { Grid } from '@mui/material';
+
+const ContactList = ({ handleEditContact }) => {
   const contacts = useSelector(selectContacts);
   const filteredContacts = useSelector(selectFilteredContacts);
 
-  if (!contacts.length) return <Message title={'No contacts yet'} />;
+  if (!contacts.length) return <Notification title={'No contacts yet'} />;
 
   if (!filteredContacts.length)
-    return <Message title={'Contacts are not found'} />;
+    return <Notification title={'Contacts are not found'} />;
+
   return (
-    <>
-      <h2 className={css.title}>Contacts list</h2>
-      <div className={css.contactList}>
-        {filteredContacts.map(item => {
-          return (
-            <Contact
-              key={item.id}
-              id={item.id}
-              name={item.name}
-              number={item.number}
-            />
-          );
-        })}
-      </div>
-    </>
+    <Grid container spacing={3} sx={{ mt: 3 }}>
+      {filteredContacts.map(({ id, name, number }) => (
+        <Grid item key={id} xs={11} alignItems="flex-start">
+          <Contact
+            id={id}
+            name={name}
+            number={number}
+            handleEditContact={handleEditContact}
+          />
+        </Grid>
+      ))}
+    </Grid>
   );
 };
 
