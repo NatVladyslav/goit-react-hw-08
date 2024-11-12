@@ -3,10 +3,11 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  DialogContentText,
   DialogTitle,
-} from '@mui/material';
+} from "@mui/material";
 
-const ConfirmModal = ({ open, handleClose, handleConfirm }) => {
+const ConfirmModal = ({ open, handleClose, handleConfirm, contact }) => {
   const handleDelete = () => {
     handleClose();
     handleConfirm();
@@ -21,7 +22,11 @@ const ConfirmModal = ({ open, handleClose, handleConfirm }) => {
       <DialogTitle id="alert-dialog-title">
         Do you want to delete contact?
       </DialogTitle>
-      <DialogContent></DialogContent>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          {contact.name}: {contact.number}
+        </DialogContentText>
+      </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
         <Button onClick={handleDelete} autoFocus>

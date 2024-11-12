@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import ContactsIcon from '@mui/icons-material/Contacts';
+import { Navigation } from '../Navigation/Navigation';
+import { UserMenu } from '../UserMenu/UserMenu';
+import { AuthNav } from '../AuthNav/AuthNav';
 
 import { Box, Button, Divider, Drawer } from '@mui/material';
 
-const Burger = () => {
+const Burger = ({ isLoggedIn }) => {
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = newOpen => () => {
@@ -35,7 +38,31 @@ const Burger = () => {
           }}
           onClick={handleClick}
         >
+          <Navigation
+            styles={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 1,
+              my: 1,
+            }}
+          />
           <Divider />
+          {isLoggedIn ? (
+            <UserMenu
+              fullWidth={true}
+              styles={{ mt: 1, flexDirection: 'column' }}
+            />
+          ) : (
+            <AuthNav
+              fullWidth={true}
+              styles={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 1,
+                mt: 1,
+              }}
+            />
+          )}
         </Box>
       </Drawer>
     </Box>
